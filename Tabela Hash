@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
-#define tam 10000000
+#define tam 10
 
 typedef struct{
     int valor;
@@ -62,24 +61,27 @@ void printa(Hash *h){
 
 int main(){
 
+    int i;
     Hash *h = criaHash(1427);
     char s[80];
-    sprintf(s, "%d.txt", tam);
-    FILE *f = fopen(s, "r");
-    for(int i = 0; i < tam/2; i++){
+    //sprintf(s, "%d.txt", tam);
+    FILE *f=fopen("numeros.txt","r");
+    for(i = 0; i < tam/2; i++){
         int a;
         fscanf(f, "%d", &a);
 
         inserir(a, h);
     }
-    for(int i = 0; i < tam/2; i++){
+    for(i = 0; i < tam/2; i++){
 
         int a, b;
         fscanf(f, "%d %d", &a, &b);
 
-        switch(b){
-            case 0: inserir(a, h); break;
-            case 1: remover(a, h); break;
+        switch(a){
+            case 0: inserir(b, h); break;
+            case 1: remover(b, h); break;
         }
     }
+    printa(h);
 }
+
