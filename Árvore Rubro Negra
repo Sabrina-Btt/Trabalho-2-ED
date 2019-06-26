@@ -236,11 +236,11 @@ int main (){
     FILE *f;
     f=fopen("numeros.txt","r");
 
-    int vet[9] = {11,2,1,5,4,7,8,14,15};
     int i,num,op;
 
     for(i=0;i<tam/2;i++){
-        insere(raiz, vet[i]);
+        fscanf(f,"%d\n",&num);
+        insere(raiz, num);
     }
 
      for(i=(tam/2);i<tam;i++){
@@ -259,30 +259,7 @@ int main (){
     }
 
 
-
-
-    /*mostrar(*raiz, 0);
-
-    printf("1- %d \n", removeRB(raiz, 4));
     mostrar(*raiz,0);
-    printf("2- %d \n", removeRB(raiz, 1));
-    mostrar(*raiz,0);
-    printf("3- %d \n", removeRB(raiz, 14));
-    mostrar(*raiz,0);
-    printf("4- %d \n", removeRB(raiz, 8));
-    mostrar(*raiz,0);
-    insere(raiz, 30);
-    printf("INSERIR 1\n");
-    mostrar(*raiz,0);
-    insere(raiz, 9);
-    printf("INSERIR 9\n");
-    mostrar(*raiz,0);
-    printf("5- %d \n", removeRB(raiz, 5));
-    mostrar(*raiz,0);
-    printf("5- %d \n", removeRB(raiz, 30));
-    mostrar(*raiz,0);*/
-
-
 
     freeGERAL(*raiz);
     return 0;
