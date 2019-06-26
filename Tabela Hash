@@ -3,8 +3,9 @@
 #include <math.h>
 #define tam 10
 
-typedef struct{
+typedef struct val{
     int valor;
+    struct val *prox;
 } Valor;
 
 typedef struct s_hash{
@@ -31,13 +32,46 @@ int PegaPosicao(int chave, int table_size){
     return (int)(table_size * val);
 }
 
+bool TemNaPosicao(int chave, Hash *h){
+    int pos = PegaPosicao(chave, h->table_size);
+
+    Valor *aux = h->valores[pos];
+    while(aux != NULL){
+        if(aux->valor == chave){
+            return true;
+        }
+        aux = aux->prox;
+    }
+    return false;
+}
+
+Valor* insereLista(Valor *val, int valor){
+    if(val == NULL){
+        val = (Valor*)malloc(sizeof(Valor));
+        val->valor = valor;
+        val->prox = NULL;
+        return val;
+    }else{
+        Valor *aux = val;
+        while(aux->prox != NULL){
+            aux = aux->prox;
+        }
+        aux->prox = (Valor*)malloc(sizeof(Valor));
+        aux->prox->valor = valor;
+        aux->prox->prox = NULL;
+        return val;
+    }
+}
+
 void inserir(int valor, Hash *h){
     if(h == NULL || h->qnt == h->table_size)
         return;
+
+    if(TemNaPosicao(valor, h))
+        return;
+
     int pos = PegaPosicao(valor, h->table_size);
-  	Valor *val = (Valor*)malloc(sizeof(Valor));
-  	val->valor = valor;
-  	h->valores[pos] = val;
+  	h->valores[pos] = insereLista(h->valores[pos], valor);
   	h->qnt++;
 }
 
@@ -61,27 +95,27 @@ void printa(Hash *h){
 
 int main(){
 
-    int i;
     Hash *h = criaHash(1427);
     char s[80];
-    //sprintf(s, "%d.txt", tam);
+    //sprintf(s, "%d.txt", N);
     FILE *f=fopen("numeros.txt","r");
-    for(i = 0; i < tam/2; i++){
+
+    for(int i = 0; i < tam/2; i++){
         int a;
         fscanf(f, "%d", &a);
-
         inserir(a, h);
     }
-    for(i = 0; i < tam/2; i++){
+    for(int i = 0; i < tam/2; i++){
 
         int a, b;
         fscanf(f, "%d %d", &a, &b);
 
-        switch(a){
-            case 0: inserir(b, h); break;
-            case 1: remover(b, h); break;
+        switch(b){
+            case 0: inserir(a, h); break;
+            case 1: remover(a, h); break;
         }
     }
     printa(h);
 }
+
 
